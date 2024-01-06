@@ -1,0 +1,61 @@
+version: "3.8"
+services:
+  shaman-db:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: shamanDB
+      MYSQL_USER: administrator
+      MYSQL_PASSWORD: wakwak123
+      MYSQL_ROOT_PASSWORD: Mk22jHGy23.B1
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - shaman-network
+
+  customer-app:
+    depends_on:
+      - shaman-db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - ./customer-app:/var/www/html
+    networks:
+      - shaman-network
+  
+  admin-app:
+    depends_on:
+      - shaman-db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3600:80
+    volumes:
+      - ./admin-app:/var/www/html
+      - ./configs/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+    networks:
+      - shaman-network
+
+  phpmyadmin:
+    depends_on:
+      - shaman-db
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: Mk22j-HGy23.B84_aSd
+    networks:
+      - shaman-network
+
+networks:
+  shaman-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

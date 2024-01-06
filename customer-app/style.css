@@ -1,0 +1,13 @@
+.shaman-background{
+    background-image: url(img/shaman-background.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    opacity:0.7;
+    fill:#000000;
+    fill-opacity:1
+}
+.contact-color{
+    background-color: #2b3035;
+    background-repeat: no-repeat;
+}
